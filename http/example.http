@@ -11,15 +11,15 @@ POST http://localhost:8080/cart/CA_01H9T1Y5MJYK0TM5BQPYEDV6EG/product
 Content-Type: application/json
 
 {
-  "name": "Keyboard",
+  "name": "Mouse",
   "amount": {
-    "amount": "100",
+    "amount": "50",
     "currency": "EUR"
   }
 }
 
 ### remove product to cart
-DELETE http://localhost:8080/cart/CA_01H9T1Y5MJYK0TM5BQPYEDV6EG/product/PR_01H9T1YC508BERZ3R6M60RHJ15
+DELETE http://localhost:8080/cart/CA_01H9T1Y5MJYK0TM5BQPYEDV6EG/product/PR_01H9T2E7CH3HJTTH1S84Q7ZM27
 
 ### buy cart
 POST http://localhost:8080/cart/CA_01H9T1Y5MJYK0TM5BQPYEDV6EG/buy

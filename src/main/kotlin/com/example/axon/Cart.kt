@@ -65,12 +65,19 @@ class Cart() {
 
     @CommandHandler
     fun on(command: RemoveProduct){
-        AggregateLifecycle.apply(
-            ProductRemoved(
-                cartId = cartId,
-                productId = command.productId
+        val product = products.firstOrNull{
+            it.id == command.productId
+        }
+        if(product == null){
+            throw ProductNotExistsException(cartId, command.productId)
+        } else {
+            AggregateLifecycle.apply(
+                ProductRemoved(
+                    cartId = cartId,
+                    productId = command.productId
+                )
             )
-        )
+        }
     }
 
     @EventSourcingHandler
@@ -97,8 +104,19 @@ data class TooManyProductsInCartException(
     val maxNumberOfProducts: Int = MAX_NUMBER_OF_PRODUCTS
 ) : RuntimeException(
     String.format(
-        "Max number of products allowed in the cart is {}, you have {} products inside",
+        "Max number of products allowed in the cart is %d, you have %d products inside",
         maxNumberOfProducts,
         numberOfProducts
+    )
+)
+
+data class ProductNotExistsException(
+    val cartId: CartId,
+    val productId: ProductId,
+) : RuntimeException(
+    String.format(
+        "Product id %s not found in cart id %s",
+        cartId.id,
+        productId.id
     )
 )

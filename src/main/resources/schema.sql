@@ -69,3 +69,13 @@ create table if not exists TokenEntry
 );
 
 /** AXON END **/
+
+
+create table if not exists Product
+(
+    productId    varchar(32)   not null primary key,
+    name         varchar(255)  not null,
+    amount       decimal       not null,
+    currency     varchar(3)    not null,
+    cartId       varchar(32)   not null
+);

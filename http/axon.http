@@ -1,0 +1,2 @@
+### reset projection
+POST http://localhost:8080/axon/admin/processing-groups/ProductProjection/replay
