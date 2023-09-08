@@ -64,11 +64,11 @@ class Cart() {
     }
 
     @CommandHandler
-    fun on(command: RemoveProduct){
-        val product = products.firstOrNull{
+    fun on(command: RemoveProduct) {
+        val product = products.firstOrNull {
             it.id == command.productId
         }
-        if(product == null){
+        if (product == null) {
             throw ProductNotExistsException(cartId, command.productId)
         } else {
             AggregateLifecycle.apply(
@@ -81,7 +81,7 @@ class Cart() {
     }
 
     @EventSourcingHandler
-    fun on(event: ProductRemoved){
+    fun on(event: ProductRemoved) {
         products.removeIf {
             it.id == event.productId
         }
@@ -96,6 +96,13 @@ class Cart() {
                 PurchaseRequired(command.cartId, products)
             )
         }
+    }
+
+    @CommandHandler
+    fun on(command: CartCommands.SendToCustomer) {
+        AggregateLifecycle.apply(
+            CartEvents.Bought(command.cartId)
+        )
     }
 }
 

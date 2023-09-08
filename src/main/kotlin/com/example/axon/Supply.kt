@@ -18,7 +18,7 @@ class Supply() {
     ) : this() {
         AggregateLifecycle.apply(
             SupplyEvents.Bought(
-                id = command.id,
+                productId = command.id,
                 name = command.name,
                 amount = command.amount
             ),
@@ -27,6 +27,6 @@ class Supply() {
 
     @EventSourcingHandler
     fun on(event: SupplyEvents.Bought) {
-        productId = event.id
+        productId = event.productId
     }
 }

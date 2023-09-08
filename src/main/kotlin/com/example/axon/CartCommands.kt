@@ -24,4 +24,9 @@ sealed class CartCommands {
         @TargetAggregateIdentifier
         val cartId: CartId,
     )
+
+    data class SendToCustomer(
+        @TargetAggregateIdentifier
+        val cartId: CartId,
+    )
 }

@@ -17,6 +17,10 @@ data class CartId(
         @JvmStatic
         fun from(id: String) = id.toCartId()
     }
+
+    override fun toString(): String {
+        return id
+    }
 }
 
 @JvmInline
@@ -27,6 +31,7 @@ value class User(
 data class ProductId(
     @JsonValue val id: String
 ){
+
     companion object{
         fun new(): ProductId =
             ProductId("PR_${UlidCreator.getUlid()}")
@@ -34,6 +39,10 @@ data class ProductId(
         @JsonCreator
         @JvmStatic
         fun from(id: String) = id.toProductId()
+    }
+
+    override fun toString(): String {
+        return id
     }
 }
 

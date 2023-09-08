@@ -28,4 +28,9 @@ sealed class CartEvents {
         val cartId: CartId,
         val products: List<Product>
     )
+
+    @Revision("1.0")
+    data class Bought(
+        val cartId: CartId,
+    )
 }
