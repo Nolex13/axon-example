@@ -13,7 +13,7 @@ class ProductProjection(
     private val jdbcTemplate: NamedParameterJdbcTemplate
 ) {
     @EventHandler
-    fun on(event: Events.ProductAdded) {
+    fun on(event: CartEvents.ProductAdded) {
         jdbcTemplate.update(
             """
             INSERT INTO Product 
@@ -30,7 +30,7 @@ class ProductProjection(
     }
 
     @EventHandler
-    fun on(event: Events.ProductRemoved) {
+    fun on(event: CartEvents.ProductRemoved) {
         jdbcTemplate.update(
             """
             DELETE FROM Product WHERE productId = :productId

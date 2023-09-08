@@ -1,13 +1,13 @@
 package com.example.axon
 
-import com.example.axon.Commands.AddProduct
-import com.example.axon.Commands.Buy
-import com.example.axon.Commands.Create
-import com.example.axon.Commands.RemoveProduct
-import com.example.axon.Events.Created
-import com.example.axon.Events.ProductAdded
-import com.example.axon.Events.ProductRemoved
-import com.example.axon.Events.PurchaseRequired
+import com.example.axon.CartCommands.AddProduct
+import com.example.axon.CartCommands.Buy
+import com.example.axon.CartCommands.Create
+import com.example.axon.CartCommands.RemoveProduct
+import com.example.axon.CartEvents.Created
+import com.example.axon.CartEvents.ProductAdded
+import com.example.axon.CartEvents.ProductRemoved
+import com.example.axon.CartEvents.PurchaseRequired
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
@@ -93,7 +93,7 @@ class Cart() {
             throw TooManyProductsInCartException(products.count())
         } else {
             AggregateLifecycle.apply(
-                PurchaseRequired(command.cartId)
+                PurchaseRequired(command.cartId, products)
             )
         }
     }

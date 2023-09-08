@@ -24,13 +24,16 @@ value class User(
     val value: String
 )
 
-@JvmInline
-value class ProductId(
-    val id: String
+data class ProductId(
+    @JsonValue val id: String
 ){
     companion object{
         fun new(): ProductId =
             ProductId("PR_${UlidCreator.getUlid()}")
+
+        @JsonCreator
+        @JvmStatic
+        fun from(id: String) = id.toProductId()
     }
 }
 
@@ -60,3 +63,4 @@ data class Money(
 fun String.toCartId() = CartId(this)
 fun String.toUser() = User(this)
 fun String.toProductName() = ProductName(this)
+fun String.toProductId() = ProductId(this)

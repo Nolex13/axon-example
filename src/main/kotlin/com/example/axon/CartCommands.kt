@@ -2,7 +2,7 @@ package com.example.axon
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
-sealed class Commands {
+sealed class CartCommands {
     data class Create(
         val user: User
     )

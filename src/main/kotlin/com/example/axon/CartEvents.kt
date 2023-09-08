@@ -2,7 +2,7 @@ package com.example.axon
 
 import org.axonframework.serialization.Revision
 
-sealed class Events {
+sealed class CartEvents {
     @Revision("1.0")
     data class Created(
         val cartId: CartId,
@@ -26,5 +26,6 @@ sealed class Events {
     @Revision("1.0")
     data class PurchaseRequired(
         val cartId: CartId,
+        val products: List<Product>
     )
 }

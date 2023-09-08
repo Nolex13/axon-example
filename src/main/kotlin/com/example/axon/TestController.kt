@@ -15,7 +15,7 @@ class TestController(
     @PostMapping("/cart/create")
     fun create(@RequestBody request: CreateRequest): CompletableFuture<CartId> =
         commandGateway.send(
-            Commands.Create(
+            CartCommands.Create(
                 request.user.toUser()
             )
         )
@@ -23,7 +23,7 @@ class TestController(
     @PostMapping("/cart/{cartId}/product")
     fun addProduct(@RequestBody request: AddProductRequest, @PathVariable cartId: CartId): CompletableFuture<CartId> =
         commandGateway.send(
-            Commands.AddProduct(
+            CartCommands.AddProduct(
                 cartId,
                 request.name.toProductName(),
                 request.amount
@@ -33,7 +33,7 @@ class TestController(
     @DeleteMapping("/cart/{cartId}/product/{productId}")
     fun removeProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<CartId> =
         commandGateway.send(
-            Commands.RemoveProduct(
+            CartCommands.RemoveProduct(
                 cartId, productId
             )
         )
@@ -41,7 +41,7 @@ class TestController(
     @PostMapping("/cart/{cartId}/buy")
     fun buy(@PathVariable cartId: CartId): CompletableFuture<CartId> =
         commandGateway.send(
-            Commands.Buy(cartId)
+            CartCommands.Buy(cartId)
         )
 
     data class CreateRequest(
