@@ -8,8 +8,8 @@ import java.util.Currency
 
 data class CartId(
     @JsonValue val id: String
-){
-    companion object{
+) {
+    companion object {
         fun new(): CartId =
             CartId("CA_${UlidCreator.getUlid()}")
 
@@ -30,9 +30,9 @@ value class User(
 
 data class ProductId(
     @JsonValue val id: String
-){
+) {
 
-    companion object{
+    companion object {
         fun new(): ProductId =
             ProductId("PR_${UlidCreator.getUlid()}")
 
@@ -41,15 +41,29 @@ data class ProductId(
         fun from(id: String) = id.toProductId()
     }
 
-    override fun toString(): String {
-        return id
-    }
+    override fun toString(): String = id
 }
 
 @JvmInline
 value class ProductName(
     val name: String
 )
+
+@JvmInline
+value class Quantity(
+    val amount: Int
+): Comparable<Quantity> {
+    fun increment() = Quantity(amount + 1)
+    fun decrement() = Quantity(amount - 1)
+
+    companion object {
+        val ZERO = Quantity(0)
+        val ONE = Quantity(1)
+    }
+
+    override fun compareTo(other: Quantity): Int =
+        amount.compareTo(other.amount)
+}
 
 data class Product(
     val id: ProductId,
@@ -60,9 +74,9 @@ data class Product(
 data class Money(
     val amount: BigDecimal,
     val currency: Currency
-){
-    companion object{
-        fun of(value: String): Money{
+) {
+    companion object {
+        fun of(value: String): Money {
             val (amount, currency) = value.split(" ")
             return Money(amount.toBigDecimal(), Currency.getInstance(currency))
         }

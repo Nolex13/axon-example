@@ -5,71 +5,58 @@ import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.SagaLifecycle
 import org.axonframework.modelling.saga.StartSaga
 import org.axonframework.spring.stereotype.Saga
-
-data class SupplyProduct(
-    val product: Product,
-    val isBought: Boolean = false
-){
-    fun bought(): SupplyProduct =
-        SupplyProduct(product, true)
-}
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
 @Saga
 class CartSaga {
     lateinit var cartId: CartId
 
-    private var products: List<SupplyProduct> = emptyList()
+    private var products: MutableMap<ProductId, Quantity> = mutableMapOf()
 
     @StartSaga
     @SagaEventHandler(associationProperty = "cartId")
-    fun on(event: CartEvents.Created) {
-        this.cartId = event.cartId
-    }
-
-    @SagaEventHandler(associationProperty = "cartId")
     fun on(
         event: CartEvents.PurchaseRequired,
+        jdbcTemplate: NamedParameterJdbcTemplate,
         commandGateway: CommandGateway
     ) {
-        this.products = event.products.map { SupplyProduct(it) }
-        this.products.forEach { product ->
-            commandGateway.send<ProductId>(
-                SupplyCommands.Buy(
-                    product.product.id,
-                    product.product.name,
-                    product.product.amount
-                )
-            ).thenApply {
-                SagaLifecycle.associateWith("productId", it.id)
-            }
+        this.cartId = event.cartId
+        products = retrieveProductInCart(jdbcTemplate, event.cartId)
+
+        products.forEach { product ->
+            SagaLifecycle.associateWith("productId", product.key.id)
+            commandGateway.send<Unit>(SellableCommands.Acquire(
+                id = product.key,
+                quantity = product.value
+            ))
         }
     }
 
     @SagaEventHandler(associationProperty = "productId")
     fun on(
-        event: SupplyEvents.Bought,
+        event: SellableEvents.Acquired,
         commandGateway: CommandGateway,
-    ){
-        products = products.map {
-            if(it.product.id == event.productId){
-                it.bought()
-            } else {
-                it
-            }
-        }
+    ) {
+        products.remove(event.productId)
 
-        if(products.all { it.isBought }){
+        if (products.isEmpty()) {
             commandGateway.send<Unit>(
-                CartCommands.SendToCustomer(cartId)
+                CartCommands.Finalize(cartId)
             )
+            SagaLifecycle.end()
         }
     }
 
-    @SagaEventHandler(associationProperty = "cartId")
-    fun on(
-        event: CartEvents.Bought,
-    ){
-        SagaLifecycle.end()
-    }
-
+    private fun retrieveProductInCart(
+        jdbcTemplate: NamedParameterJdbcTemplate,
+        cartId: CartId
+    ) = jdbcTemplate.query(
+        """
+                SELECT productId, quantity FROM Cart
+                WHERE cartId = :cartId
+            """,
+        mapOf("cartId" to cartId.id)
+    ) { rs, _ ->
+        ProductId(rs.getString("productId")) to Quantity(rs.getInt("quantity"))
+    }.toMap().toMutableMap()
 }

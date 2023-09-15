@@ -1,3 +1,6 @@
+### init
+POST http://localhost:8080/init
+
 ### create cart
 POST http://localhost:8080/cart/create
 Content-Type: application/json
@@ -7,20 +10,11 @@ Content-Type: application/json
 }
 
 ### add product to cart
-POST http://localhost:8080/cart/CA_01H9T4S859VS8CRGDN3AWHWEVN/product
-Content-Type: application/json
-
-{
-  "name": "Keyboard",
-  "amount": {
-    "amount": "100",
-    "currency": "EUR"
-  }
-}
+POST http://localhost:8080/cart/CA_01HAC7HWAVZDWPK3FJ6DJTA9AC/product/PR_01HAC7HDBJD0ZK3SQ96057JQ15
 
 ### remove product to cart
-DELETE http://localhost:8080/cart/CA_01H9T1Y5MJYK0TM5BQPYEDV6EG/product/PR_01H9T2E7CH3HJTTH1S84Q7ZM27
+DELETE http://localhost:8080/cart/CA_01HAC71WXTXH5VZJ8T8WQX1JC1/product/PR_01HAC7HDBJD0ZK3SQ96057JQ15
 
-### buy cart
-POST http://localhost:8080/cart/CA_01H9T4S859VS8CRGDN3AWHWEVN/buy
+### checkout cart
+POST http://localhost:8080/cart/CA_01HAC7HWAVZDWPK3FJ6DJTA9AC/buy
 

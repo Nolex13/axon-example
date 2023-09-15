@@ -1,8 +1,10 @@
-# DROP TABLE IF EXISTS AssociationValueEntry;
-# DROP TABLE IF EXISTS DomainEventEntry;
-# DROP TABLE IF EXISTS SagaEntry;
-# DROP TABLE IF EXISTS SnapshotEventEntry;
-# DROP TABLE IF EXISTS TokenEntry;
+DROP TABLE IF EXISTS AssociationValueEntry;
+DROP TABLE IF EXISTS DomainEventEntry;
+DROP TABLE IF EXISTS SagaEntry;
+DROP TABLE IF EXISTS SnapshotEventEntry;
+DROP TABLE IF EXISTS TokenEntry;
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS Inventory;
 
 /** AXON START **/
 
@@ -71,11 +73,19 @@ create table if not exists TokenEntry
 /** AXON END **/
 
 
-create table if not exists Product
+create table if not exists Cart
+(
+    cartId       varchar(32)   not null,
+    productId    varchar(32)   not null,
+    quantity     int           not null,
+    primary key (cartId, productId)
+);
+
+create table if not exists Inventory
 (
     productId    varchar(32)   not null primary key,
     name         varchar(255)  not null,
     amount       decimal       not null,
     currency     varchar(3)    not null,
-    cartId       varchar(32)   not null
+    quantity     int   not null
 );

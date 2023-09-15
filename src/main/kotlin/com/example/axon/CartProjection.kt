@@ -8,23 +8,22 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Component
 
 @Component
-@ProcessingGroup("ProductProjection")
-class ProductProjection(
+@ProcessingGroup("CartProjection")
+class CartProjection(
     private val jdbcTemplate: NamedParameterJdbcTemplate
 ) {
     @EventHandler
     fun on(event: CartEvents.ProductAdded) {
         jdbcTemplate.update(
             """
-            INSERT INTO Product 
-            (productId, name, amount, currency, cartId) 
-            VALUES (:productId, :name, :amount, :currency, :cartId)
+            INSERT INTO Cart 
+            (productId, cartId, quantity) 
+            VALUES (:productId, :cartId, :quantity)
+            ON DUPLICATE KEY UPDATE quantity = :quantity
         """, mapOf(
                 "productId" to event.productId.id,
-                "name" to event.name.name,
-                "amount" to event.amount.amount,
-                "currency" to event.amount.currency.currencyCode,
                 "cartId" to event.cartId.id,
+                "quantity" to event.quantity.amount
             )
         )
     }
@@ -33,9 +32,11 @@ class ProductProjection(
     fun on(event: CartEvents.ProductRemoved) {
         jdbcTemplate.update(
             """
-            DELETE FROM Product WHERE productId = :productId
+            UPDATE Cart SET quantity=:quantity WHERE productId = :productId AND cartId=:cartId
         """, mapOf(
                 "productId" to event.productId.id,
+                "cartId" to event.cartId.id,
+                "quantity" to event.quantity.amount,
             )
         )
     }

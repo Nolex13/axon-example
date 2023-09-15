@@ -10,8 +10,7 @@ sealed class CartCommands {
     data class AddProduct(
         @TargetAggregateIdentifier
         val cartId: CartId,
-        val name: ProductName,
-        val amount: Money,
+        val productId: ProductId,
     )
 
     data class RemoveProduct(
@@ -20,12 +19,12 @@ sealed class CartCommands {
         val productId: ProductId,
     )
 
-    data class Buy(
+    data class Checkout(
         @TargetAggregateIdentifier
         val cartId: CartId,
     )
 
-    data class SendToCustomer(
+    data class Finalize(
         @TargetAggregateIdentifier
         val cartId: CartId,
     )

@@ -13,20 +13,19 @@ sealed class CartEvents {
     data class ProductAdded(
         val cartId: CartId,
         val productId: ProductId,
-        val name: ProductName,
-        val amount: Money,
+        val quantity: Quantity
     )
 
     @Revision("1.0")
     data class ProductRemoved(
         val cartId: CartId,
         val productId: ProductId,
+        val quantity: Quantity
     )
 
     @Revision("1.0")
     data class PurchaseRequired(
         val cartId: CartId,
-        val products: List<Product>
     )
 
     @Revision("1.0")

@@ -12,6 +12,34 @@ import org.springframework.web.bind.annotation.RestController
 class TestController(
     private val commandGateway: CommandGateway
 ) {
+    @PostMapping("/init")
+    fun init() {
+        commandGateway.send<ProductId>(
+            SellableCommands.Fill(
+                id = ProductId.new(),
+                name = "Keyboard".toProductName(),
+                amount = Money.of("10 EUR"),
+                quantity = Quantity(5)
+            )
+        )
+        commandGateway.send<ProductId>(
+            SellableCommands.Fill(
+                id = ProductId.new(),
+                name = "Mouse".toProductName(),
+                amount = Money.of("5 EUR"),
+                quantity = Quantity(3)
+            )
+        )
+        commandGateway.send<ProductId>(
+            SellableCommands.Fill(
+                id = ProductId.new(),
+                name = "Monitor".toProductName(),
+                amount = Money.of("100 EUR"),
+                quantity = Quantity(10)
+            )
+        )
+    }
+
     @PostMapping("/cart/create")
     fun create(@RequestBody request: CreateRequest): CompletableFuture<CartId> =
         commandGateway.send(
@@ -20,14 +48,10 @@ class TestController(
             )
         )
 
-    @PostMapping("/cart/{cartId}/product")
-    fun addProduct(@RequestBody request: AddProductRequest, @PathVariable cartId: CartId): CompletableFuture<CartId> =
+    @PostMapping("/cart/{cartId}/product/{productId}")
+    fun addProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<CartId> =
         commandGateway.send(
-            CartCommands.AddProduct(
-                cartId,
-                request.name.toProductName(),
-                request.amount
-            )
+            CartCommands.AddProduct(cartId, productId)
         )
 
     @DeleteMapping("/cart/{cartId}/product/{productId}")
@@ -41,15 +65,10 @@ class TestController(
     @PostMapping("/cart/{cartId}/buy")
     fun buy(@PathVariable cartId: CartId): CompletableFuture<CartId> =
         commandGateway.send(
-            CartCommands.Buy(cartId)
+            CartCommands.Checkout(cartId)
         )
 
     data class CreateRequest(
         val user: String
-    )
-
-    data class AddProductRequest(
-        val name: String,
-        val amount: Money,
     )
 }
