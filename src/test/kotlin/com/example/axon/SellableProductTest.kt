@@ -94,7 +94,7 @@ class SellableProductTest {
     }
 
     @Test
-    fun `acquire a product no more avaiable`() {
+    fun `acquire a product no more available`() {
         fixture.given(
             Filled(
                 productId = aProductId,
