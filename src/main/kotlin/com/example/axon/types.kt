@@ -59,6 +59,8 @@ value class Quantity(
     companion object {
         val ZERO = Quantity(0)
         val ONE = Quantity(1)
+        val TWO = Quantity(2)
+        val THREE = Quantity(3)
     }
 
     override fun compareTo(other: Quantity): Int =

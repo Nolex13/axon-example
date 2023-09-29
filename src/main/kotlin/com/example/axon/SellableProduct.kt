@@ -13,7 +13,7 @@ import org.axonframework.spring.stereotype.Aggregate
 class SellableProduct() {
     @AggregateIdentifier
     private lateinit var productId: ProductId
-    private var quantity: Quantity = ZERO
+    var quantity: Quantity = ZERO
 
     @CommandHandler
     constructor(
@@ -44,7 +44,7 @@ class SellableProduct() {
         AggregateLifecycle.apply(
             SellableEvents.Acquired(
                 productId = command.id,
-                quantity = remainingQuantity
+                remainingQuantity = remainingQuantity
             ),
         )
 
@@ -55,6 +55,6 @@ class SellableProduct() {
 
     @EventSourcingHandler
     fun on(event: SellableEvents.Acquired) {
-        quantity = event.quantity
+        quantity = event.remainingQuantity
     }
 }

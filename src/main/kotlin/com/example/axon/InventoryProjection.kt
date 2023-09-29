@@ -35,7 +35,7 @@ class InventoryProjection(
              WHERE productId = :productId
         """, mapOf(
                 "productId" to event.productId.id,
-                "quantity" to event.quantity.amount
+                "quantity" to event.remainingQuantity.amount
             )
         )
     }

@@ -19,6 +19,6 @@ sealed class SellableEvents {
     @Revision("1.0")
     data class Acquired(
         val productId: ProductId,
-        val quantity: Quantity
+        val remainingQuantity: Quantity
     )
 }
