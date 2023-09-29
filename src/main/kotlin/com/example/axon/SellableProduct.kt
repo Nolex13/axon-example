@@ -55,6 +55,6 @@ class SellableProduct() {
 
     @EventSourcingHandler
     fun on(event: SellableEvents.Acquired) {
-        quantity = Quantity(quantity.amount - event.quantity.amount)
+        quantity = event.quantity
     }
 }
