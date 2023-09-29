@@ -16,7 +16,7 @@ class TestController(
     fun init() {
         commandGateway.send<ProductId>(
             SellableCommands.Fill(
-                id = ProductId.new(),
+                id = "PR_01HBG0DW8DPM6ZG6HBNBCNH5N8".toProductId(),
                 name = "Keyboard".toProductName(),
                 amount = Money.of("10 EUR"),
                 quantity = Quantity(5)
@@ -24,7 +24,7 @@ class TestController(
         )
         commandGateway.send<ProductId>(
             SellableCommands.Fill(
-                id = ProductId.new(),
+                id ="PR_01HBG0DWCF279HG44BZMVGEZMC".toProductId(),
                 name = "Mouse".toProductName(),
                 amount = Money.of("5 EUR"),
                 quantity = Quantity(3)
@@ -32,7 +32,7 @@ class TestController(
         )
         commandGateway.send<ProductId>(
             SellableCommands.Fill(
-                id = ProductId.new(),
+                id = "PR_01HBG0DWCYSQ6KHT7J576GSHAZ".toProductId(),
                 name = "Monitor".toProductName(),
                 amount = Money.of("100 EUR"),
                 quantity = Quantity(10)
