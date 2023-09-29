@@ -52,7 +52,7 @@ value class ProductName(
 @JvmInline
 value class Quantity(
     val amount: Int
-): Comparable<Quantity> {
+) : Comparable<Quantity> {
     fun increment() = Quantity(amount + 1)
     fun decrement() = Quantity(amount - 1)
 
@@ -63,6 +63,9 @@ value class Quantity(
 
     override fun compareTo(other: Quantity): Int =
         amount.compareTo(other.amount)
+
+    operator fun minus(other: Quantity): Quantity =
+        Quantity(this.amount - other.amount)
 }
 
 data class Product(

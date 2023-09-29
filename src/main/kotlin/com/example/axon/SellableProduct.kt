@@ -1,5 +1,6 @@
 package com.example.axon
 
+import com.example.axon.Quantity.Companion.ONE
 import com.example.axon.Quantity.Companion.ZERO
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -35,25 +36,25 @@ class SellableProduct() {
     }
 
     @CommandHandler
-    fun on(command:SellableCommands.Acquire){
-        val remainingQuantity = quantity.amount - command.quantity.amount
+    fun on(command: SellableCommands.Acquire) {
+        val remainingQuantity = quantity - command.quantity
 
-        check(remainingQuantity>= 0)
+        check(remainingQuantity >= ZERO)
 
         AggregateLifecycle.apply(
             SellableEvents.Acquired(
                 productId = command.id,
-                quantity = command.quantity
+                quantity = remainingQuantity
             ),
         )
 
-        if(remainingQuantity == 1){
+        if (remainingQuantity == ONE) {
             AggregateLifecycle.apply(SellableEvents.Depleted(command.id))
         }
     }
 
     @EventSourcingHandler
-    fun on(event: SellableEvents.Acquired){
+    fun on(event: SellableEvents.Acquired) {
         quantity = Quantity(quantity.amount - event.quantity.amount)
     }
 }
