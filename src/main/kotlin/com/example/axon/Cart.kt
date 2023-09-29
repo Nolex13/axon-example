@@ -3,7 +3,9 @@ package com.example.axon
 import com.example.axon.CartCommands.AddProduct
 import com.example.axon.CartCommands.Checkout
 import com.example.axon.CartCommands.Create
+import com.example.axon.CartCommands.Finalize
 import com.example.axon.CartCommands.RemoveProduct
+import com.example.axon.CartEvents.Bought
 import com.example.axon.CartEvents.Created
 import com.example.axon.CartEvents.ProductAdded
 import com.example.axon.CartEvents.ProductRemoved
@@ -95,6 +97,13 @@ class Cart() {
     @EventSourcingHandler
     fun on(event: PurchaseRequired) {
         lock = true
+    }
+
+    @CommandHandler
+    fun on(command: Finalize){
+        AggregateLifecycle.apply(
+            Bought(command.cartId)
+        )
     }
 }
 
