@@ -47,7 +47,7 @@ class SellableProduct() {
             ),
         )
 
-        if(remainingQuantity <= 1){
+        if(remainingQuantity == 1){
             AggregateLifecycle.apply(SellableEvents.Depleted(command.id))
         }
     }
