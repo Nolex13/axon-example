@@ -49,13 +49,13 @@ class TestController(
         )
 
     @PostMapping("/cart/{cartId}/product/{productId}")
-    fun addProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<CartId> =
+    fun addProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<Unit> =
         commandGateway.send(
             CartCommands.AddProduct(cartId, productId)
         )
 
     @DeleteMapping("/cart/{cartId}/product/{productId}")
-    fun removeProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<CartId> =
+    fun removeProduct(@PathVariable cartId: CartId, @PathVariable productId: ProductId): CompletableFuture<Unit> =
         commandGateway.send(
             CartCommands.RemoveProduct(
                 cartId, productId
@@ -63,7 +63,7 @@ class TestController(
         )
 
     @PostMapping("/cart/{cartId}/buy")
-    fun buy(@PathVariable cartId: CartId): CompletableFuture<CartId> =
+    fun buy(@PathVariable cartId: CartId): CompletableFuture<Unit> =
         commandGateway.send(
             CartCommands.Checkout(cartId)
         )
