@@ -41,3 +41,6 @@
 - **Scalability:** Allows for scaling the write and read components independently based on their specific requirements.
 
 - **Consistency Models:** May lead to eventual consistency between the command and query models.
+
+## Event storming
+![alt text](./event-storming.jpg)
