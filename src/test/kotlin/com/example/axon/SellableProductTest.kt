@@ -4,11 +4,11 @@ import com.example.axon.Quantity.Companion.ONE
 import com.example.axon.Quantity.Companion.THREE
 import com.example.axon.Quantity.Companion.TWO
 import com.example.axon.Quantity.Companion.ZERO
-import com.example.axon.SellableCommands.Acquire
-import com.example.axon.SellableCommands.Fill
-import com.example.axon.SellableEvents.Acquired
-import com.example.axon.SellableEvents.Depleted
-import com.example.axon.SellableEvents.Filled
+import com.example.axon.command.SellableCommands.Acquire
+import com.example.axon.command.SellableCommands.Fill
+import com.example.axon.event.SellableEvents.Acquired
+import com.example.axon.event.SellableEvents.Depleted
+import com.example.axon.event.SellableEvents.Filled
 import io.kotest.matchers.shouldBe
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration

@@ -1,11 +1,12 @@
 package com.example.axon
 
-import com.example.axon.CartCommands.Finalize
-import com.example.axon.CartEvents.PurchaseRequired
+import com.example.axon.command.CartCommands.Finalize
+import com.example.axon.event.CartEvents.PurchaseRequired
 import com.example.axon.Quantity.Companion.ONE
 import com.example.axon.Quantity.Companion.ZERO
-import com.example.axon.SellableCommands.Acquire
-import com.example.axon.SellableEvents.Acquired
+import com.example.axon.command.SellableCommands.Acquire
+import com.example.axon.event.SellableEvents.Acquired
+import com.example.axon.saga.CartSaga
 import org.axonframework.test.saga.SagaTestFixture
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

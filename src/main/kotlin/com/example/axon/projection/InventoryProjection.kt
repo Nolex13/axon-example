@@ -1,5 +1,6 @@
-package com.example.axon
+package com.example.axon.projection
 
+import com.example.axon.event.SellableEvents
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate

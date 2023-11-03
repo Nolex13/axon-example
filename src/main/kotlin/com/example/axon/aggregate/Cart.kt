@@ -1,15 +1,18 @@
-package com.example.axon
+package com.example.axon.aggregate
 
-import com.example.axon.CartCommands.AddProduct
-import com.example.axon.CartCommands.Checkout
-import com.example.axon.CartCommands.Create
-import com.example.axon.CartCommands.Finalize
-import com.example.axon.CartCommands.RemoveProduct
-import com.example.axon.CartEvents.Bought
-import com.example.axon.CartEvents.Created
-import com.example.axon.CartEvents.ProductAdded
-import com.example.axon.CartEvents.ProductRemoved
-import com.example.axon.CartEvents.PurchaseRequired
+import com.example.axon.command.CartCommands.AddProduct
+import com.example.axon.command.CartCommands.Checkout
+import com.example.axon.command.CartCommands.Create
+import com.example.axon.command.CartCommands.Finalize
+import com.example.axon.command.CartCommands.RemoveProduct
+import com.example.axon.event.CartEvents.Bought
+import com.example.axon.event.CartEvents.Created
+import com.example.axon.event.CartEvents.ProductAdded
+import com.example.axon.event.CartEvents.ProductRemoved
+import com.example.axon.event.CartEvents.PurchaseRequired
+import com.example.axon.CartId
+import com.example.axon.ProductId
+import com.example.axon.Quantity
 import com.example.axon.Quantity.Companion.ZERO
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -64,9 +67,7 @@ class Cart() {
     fun on(command: RemoveProduct) {
         check(!lock)
 
-        val quantity = products[command.productId]
-
-        when (quantity) {
+        when (val quantity = products[command.productId]) {
             null, ZERO -> throw ProductNotExistsException(cartId, command.productId)
             else -> AggregateLifecycle.apply(
                 ProductRemoved(

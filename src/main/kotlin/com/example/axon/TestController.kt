@@ -1,5 +1,7 @@
 package com.example.axon
 
+import com.example.axon.command.CartCommands
+import com.example.axon.command.SellableCommands
 import java.util.concurrent.CompletableFuture
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.web.bind.annotation.DeleteMapping

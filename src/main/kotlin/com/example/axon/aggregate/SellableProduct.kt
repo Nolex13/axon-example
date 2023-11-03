@@ -1,7 +1,11 @@
-package com.example.axon
+package com.example.axon.aggregate
 
+import com.example.axon.ProductId
+import com.example.axon.Quantity
 import com.example.axon.Quantity.Companion.ONE
 import com.example.axon.Quantity.Companion.ZERO
+import com.example.axon.command.SellableCommands
+import com.example.axon.event.SellableEvents
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier

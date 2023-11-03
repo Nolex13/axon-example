@@ -1,5 +1,9 @@
-package com.example.axon
+package com.example.axon.event
 
+import com.example.axon.CartId
+import com.example.axon.ProductId
+import com.example.axon.Quantity
+import com.example.axon.User
 import org.axonframework.serialization.Revision
 
 sealed class CartEvents {

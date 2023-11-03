@@ -1,5 +1,9 @@
-package com.example.axon
+package com.example.axon.command
 
+import com.example.axon.Money
+import com.example.axon.ProductId
+import com.example.axon.ProductName
+import com.example.axon.Quantity
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 sealed class SellableCommands {

@@ -1,5 +1,12 @@
-package com.example.axon
+package com.example.axon.saga
 
+import com.example.axon.CartId
+import com.example.axon.ProductId
+import com.example.axon.Quantity
+import com.example.axon.command.CartCommands
+import com.example.axon.command.SellableCommands
+import com.example.axon.event.CartEvents
+import com.example.axon.event.SellableEvents
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.SagaLifecycle
@@ -25,7 +32,8 @@ class CartSaga {
 
         products.forEach { product ->
             SagaLifecycle.associateWith("productId", product.key.id)
-            commandGateway.send<Unit>(SellableCommands.Acquire(
+            commandGateway.send<Unit>(
+                SellableCommands.Acquire(
                 id = product.key,
                 quantity = product.value
             ))

@@ -1,5 +1,8 @@
-package com.example.axon
+package com.example.axon.command
 
+import com.example.axon.CartId
+import com.example.axon.ProductId
+import com.example.axon.User
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 sealed class CartCommands {
