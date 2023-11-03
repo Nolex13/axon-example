@@ -27,17 +27,4 @@ class InventoryProjection(
             )
         )
     }
-
-    @EventHandler
-    fun on(event: SellableEvents.Acquired) {
-        jdbcTemplate.update(
-            """
-            UPDATE Inventory SET quantity = :quantity
-             WHERE productId = :productId
-        """, mapOf(
-                "productId" to event.productId.id,
-                "quantity" to event.remainingQuantity.amount
-            )
-        )
-    }
 }
