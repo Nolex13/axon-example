@@ -1,4 +1,6 @@
-# Axon Framework
+# Axon Framework example
+
+## Getting started
 
 ## Axon on db vs Axon Server
 - You cannot send **Commands**, receive **Events** or send **Queries** on different microservices

@@ -57,7 +57,6 @@ class Cart() {
 
     @EventSourcingHandler
     fun on(event: ProductAdded) {
-        // TODO check inventory
         products[event.productId] = event.quantity
     }
 

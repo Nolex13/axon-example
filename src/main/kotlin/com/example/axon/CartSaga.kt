@@ -21,7 +21,7 @@ class CartSaga {
         commandGateway: CommandGateway
     ) {
         this.cartId = event.cartId
-        products = retrieveProductInCart(jdbcTemplate, event.cartId)
+        products = jdbcTemplate.retrieveProductInCartFor(event.cartId)
 
         products.forEach { product ->
             SagaLifecycle.associateWith("productId", product.key.id)
@@ -47,10 +47,9 @@ class CartSaga {
         }
     }
 
-    private fun retrieveProductInCart(
-        jdbcTemplate: NamedParameterJdbcTemplate,
+    private fun NamedParameterJdbcTemplate.retrieveProductInCartFor(
         cartId: CartId
-    ) = jdbcTemplate.query(
+    ) = query(
         """
                 SELECT productId, quantity FROM Cart
                 WHERE cartId = :cartId
