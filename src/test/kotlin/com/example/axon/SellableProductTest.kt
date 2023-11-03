@@ -4,6 +4,7 @@ import com.example.axon.Quantity.Companion.ONE
 import com.example.axon.Quantity.Companion.THREE
 import com.example.axon.Quantity.Companion.TWO
 import com.example.axon.Quantity.Companion.ZERO
+import com.example.axon.aggregate.SellableProduct
 import com.example.axon.command.SellableCommands.Acquire
 import com.example.axon.command.SellableCommands.Fill
 import com.example.axon.event.SellableEvents.Acquired

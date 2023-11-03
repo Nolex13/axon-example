@@ -1,5 +1,11 @@
 # Axon Framework example
 
+## Getting started
+- run `docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=axon --name axon-db mysql`
+- start the application
+- use the http files 
+- enjoy
+
 ## Axon on db vs Axon Server
 - You cannot send **Commands**, receive **Events** or send **Queries** on different microservices
 - **Subscription query** not supported
