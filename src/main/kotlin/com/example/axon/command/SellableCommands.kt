@@ -13,10 +13,4 @@ sealed class SellableCommands {
         val amount: Money,
         val quantity: Quantity
     )
-
-    data class Acquire(
-        @TargetAggregateIdentifier
-        val id: ProductId,
-        val quantity: Quantity
-    )
 }

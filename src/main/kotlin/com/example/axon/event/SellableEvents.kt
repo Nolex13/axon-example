@@ -14,15 +14,4 @@ sealed class SellableEvents {
         val amount: Money,
         val quantity: Quantity
     )
-
-    @Revision("1.0")
-    data class Depleted(
-        val productId: ProductId,
-    )
-
-    @Revision("1.0")
-    data class Acquired(
-        val productId: ProductId,
-        val remainingQuantity: Quantity
-    )
 }

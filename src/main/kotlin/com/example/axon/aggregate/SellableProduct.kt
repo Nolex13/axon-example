@@ -38,27 +38,4 @@ class SellableProduct() {
         productId = event.productId
         quantity = event.quantity
     }
-
-    @CommandHandler
-    fun on(command: SellableCommands.Acquire) {
-        val remainingQuantity = quantity - command.quantity
-
-        check(remainingQuantity >= ZERO)
-
-        AggregateLifecycle.apply(
-            SellableEvents.Acquired(
-                productId = command.id,
-                remainingQuantity = remainingQuantity
-            ),
-        )
-
-        if (remainingQuantity == ONE) {
-            AggregateLifecycle.apply(SellableEvents.Depleted(command.id))
-        }
-    }
-
-    @EventSourcingHandler
-    fun on(event: SellableEvents.Acquired) {
-        quantity = event.remainingQuantity
-    }
 }
