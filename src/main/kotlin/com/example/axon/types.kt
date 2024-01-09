@@ -23,6 +23,40 @@ data class CartId(
     }
 }
 
+data class PurchaseOrderCode(
+    @JsonValue val code: String
+) {
+    companion object {
+        fun new(): PurchaseOrderCode =
+            PurchaseOrderCode("PO_${UlidCreator.getUlid()}")
+
+        @JsonCreator
+        @JvmStatic
+        fun from(id: String) = id.toPurchaseOrderCode()
+    }
+
+    override fun toString(): String {
+        return code
+    }
+}
+
+data class VariationCode(
+    @JsonValue val code: String
+) {
+    companion object {
+        fun new(): VariationCode =
+            VariationCode("VA_${UlidCreator.getUlid()}")
+
+        @JsonCreator
+        @JvmStatic
+        fun from(id: String) = id.toVariationCode()
+    }
+
+    override fun toString(): String {
+        return code
+    }
+}
+
 @JvmInline
 value class User(
     val value: String
@@ -89,6 +123,8 @@ data class Money(
 }
 
 fun String.toCartId() = CartId(this)
+fun String.toPurchaseOrderCode() = PurchaseOrderCode(this)
+fun String.toVariationCode() = VariationCode(this)
 fun String.toUser() = User(this)
 fun String.toProductName() = ProductName(this)
 fun String.toProductId() = ProductId(this)

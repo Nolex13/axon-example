@@ -69,13 +69,15 @@ class Cart() {
 
         when (val quantity = products[command.productId]) {
             null, ZERO -> throw ProductNotExistsException(cartId, command.productId)
-            else -> AggregateLifecycle.apply(
-                ProductRemoved(
-                    cartId = cartId,
-                    productId = command.productId,
-                    quantity = quantity.decrement()
+            else -> {
+                AggregateLifecycle.apply(
+                    ProductRemoved(
+                        cartId = cartId,
+                        productId = command.productId,
+                        quantity = quantity.decrement()
+                    )
                 )
-            )
+            }
         }
     }
 

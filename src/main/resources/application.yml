@@ -10,7 +10,7 @@ spring:
       ddl-auto: none
   sql:
     init:
-      mode: always
+      mode: never
 axon:
   serializer:
     general: jackson
