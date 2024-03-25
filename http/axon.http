@@ -1,2 +1,6 @@
 ### reset projection
 POST http://localhost:8080/axon/admin/processing-groups/InventoryProjection/replay
+### split projection
+POST http://localhost:8080/axon/admin/processing-groups/CartSagaProcessor/split/0
+### merge projection
+POST http://localhost:8080/axon/admin/processing-groups/CartSagaProcessor/merge/0

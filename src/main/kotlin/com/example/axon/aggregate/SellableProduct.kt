@@ -45,6 +45,8 @@ class SellableProduct() {
 
         check(remainingQuantity >= ZERO)
 
+        Thread.sleep(1000)
+
         AggregateLifecycle.apply(
             SellableEvents.Acquired(
                 productId = command.id,

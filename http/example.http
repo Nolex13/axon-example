@@ -1,6 +1,9 @@
 ### init
 POST http://localhost:8080/init
 
+### stress test
+POST http://localhost:8080/stress
+
 ### create cart
 POST http://localhost:8080/cart/create
 Content-Type: application/json
